@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <style>
+        body {
+            margin: 0;
+        }
+
+        ul {
+            list-style-type: none;
+            display: flex;
+            justify-content: space-between;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
+
+        li {
+            float: left;
+        }
+
+        li a {
+            display: inline-block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        li a:hover:not(.active) {
+            background-color: white;
+            color: black;
+        }
+
+        .active {
+            background-color: #04AA6D;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .container {
+            position: relative;
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
+
+
+        .mySlides {
+            display: none;
+        }
+
+
+        .cursor {
+            cursor: pointer;
+        }
+
+
+        .prev,
+        .next {
+            cursor: pointer;
+            position: absolute;
+            top: 40%;
+            width: auto;
+            padding: 16px;
+            margin-top: -50px;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+
+        .prev:hover,
+        .next:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+
+        .numbertext {
+            color: #f2f2f2;
+            font-size: 12px;
+            padding: 8px 12px;
+            position: absolute;
+            top: 0;
+        }
+
+
+        .caption-container {
+            text-align: center;
+            background-color: #222;
+            padding: 2px 16px;
+            color: white;
+        }
+
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+
+        .column {
+            float: left;
+            width: 16.66%;
+        }
+
+
+        .demo {
+            opacity: 0.6;
+        }
+
+        .active,
+        .demo:hover {
+            opacity: 1;
+        }
+        .contact_me{
+        width: 100%;
+        height: 280px;
+        background-size: cover;
+        background-repeat: no-repeat;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .box_1,.box_2,.box_3,.box_4{
+        width: 300px;
+        height: 320px;
+        background-repeat: no-repeat;
+        background-size: cover;
+        box-shadow:2px 2px 12px rgba(0,0,0,0.3);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+    .box_container{
+        display: flex;
+        justify-content: space-between;
+    }
+    .box_1{
+        background-color: white;
+    }
+    .box_2{
+        background-color: white;
+    }
+    .box_3{
+        background-color: white;
+    }
+    .box_4{
+        background-color: white;
+    }
+    .box_1 span,
+    .box_2 span,
+    .box_3 span,
+    .box_4 span{
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: black;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Architects Daughter', cursive;
+        font-weight: bold;
+    
+    }
+
+    .box_1 p:nth-child(2),
+    .box_2 p:nth-child(2),
+    .box_3 p:nth-child(2)
+    .box_4 p:nth-child(2){
+        color: black;
+        font-family: 'Architects Daughter', cursive;
+        font-size: 16px;
+        line-height: 0px;
+    }
+    .box_1 p:nth-child(3),
+    .box_2 p:nth-child(3),
+    .box_3 p:nth-child(3),
+    .box_4 p:nth-child(3){
+        font-family: 'Architects Daughter', cursive;
+        text-align: center;
+        width: 200px;
+        margin: 0px 0px 20px 0px;
+        color: #8f8f8f;
+    }
+    footer{
+        height: 300px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        background-color: #FFFFFF;
+        font-family: 'Architects Daughter', cursive;
+    }
+    footer p{
+        font-family: 'Chelsea Market', cursive;
+    }
+    </style>
+    <head xmlns="http://www.w3.org/1999/xhtml">
+        <meta charset="UTF-8">
+        <title>Car Price Predictor</title>
+        <link rel="stylesheet" href="static/css/style.css">
+        <link rel="stylesheet" type="text/css"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+                integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+                crossorigin="anonymous"></script>
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+            integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@2.0.0/dist/tf.min.js"></script>
+
+    </head>
+    <body class="bg-dark">
+        <Section Class="Nav_Bar" style="position: absolute; z-index: 1;">
+            <div>
+                <ul>
+                    <li style="float:right; padding-left: 25px;"><a href="#Home">Home</a></li>
+                    <div>
+
+                        <li style="float:right"><a href="#Contact_Us">Contact Us</a></li>
+                        <li style="float:right"><a href="#About_Us">About Us</a></li>
+                        <li><a href="#Car_Predictor">Car Price Prediction</a></li>
+                    </div>
+                </ul>
+            </div>
+        </Section>
+
+        <Section id="Home" style="padding-bottom: 100px;">
+            <div style="color: white; padding-top: 50px; padding-left: 20px;">
+                <h1 style="text-align: Center; padding-top: 10px;">
+                    <b style="font-size: 50px;">W</b>elcome to <b style="font-size: 50px;">C</b>ar <b
+                        style="font-size: 50px;">P</b>rice <b style="font-size: 50px;">P</b>redictor
+                </h1>
+                <p style="text-align: Center; padding-top: 8px;">
+                    <b style="font-size: 20px;">D</b>ream <b style="font-size: 20px;">B</b>ig, <b
+                        style="font-size: 20px;">B</b>uy <b style="font-size: 20px;">M</b>ore, <b
+                        style="font-size: 20px;">P</b>ay <b style="font-size: 20px;">L</b>ess
+                </p>
+
+                <div class="container" style="padding-top: 40px;">
+
+
+                    <div class="mySlides">
+                        <!-- <div class="numbertext">1 / 6</div> -->
+                        <img src="{{url_for('static',filename='image/page1.png')}}" style="width:100%">
+                    </div>
+
+                    <div class="mySlides">
+                        <!-- <div class="numbertext">2 / 6</div> -->
+                        <img src="{{url_for('static',filename='image/page2.png')}}" alt="Car Price Predictor" style="width:100%">
+                    </div>
+
+                    <div class="mySlides">
+                        <!-- <div class="numbertext">3 / 6</div> -->
+                        <img src="{{url_for('static',filename='image/page3.png')}}" alt="Car Price Predictor" style="width:100%">
+                    </div>
+
+                    <div class="mySlides">
+                        <!-- <div class="numbertext">4 / 6</div> -->
+                        <img src="{{url_for('static',filename='image/page4.png')}}" alt="Car Price Predictor" style="width:100%">
+                    </div>
+
+                    <!-- <div class="mySlides">
+                    <div class="numbertext">5 / 6</div>
+                        <img src="img_nature_wide.jpg" style="width:100%">
+                    </div>
+                
+                    <div class="mySlides">
+                    <div class="numbertext">6 / 6</div>
+                        <img src="img_snow_wide.jpg" style="width:100%">
+                    </div> -->
+
+
+                    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+
+                    <div class="caption-container">
+                        <p id="caption"></p>
+                    </div>
+
+
+                    <div class="row">
+                        <!-- <div class="column">
+                        <img class="demo cursor" src="img_woods.jpg" style="width:100%" onclick="currentSlide(1)" alt="The Woods">
+                    </div>
+                    <div class="column">
+                        <img class="demo cursor" src="img_5terre.jpg" style="width:100%" onclick="currentSlide(2)" alt="Cinque Terre">
+                    </div>
+                    <div class="column">
+                        <img class="demo cursor" src="img_mountains.jpg" style="width:100%" onclick="currentSlide(3)" alt="Mountains and fjords">
+                    </div>
+                    <div class="column">
+                        <img class="demo cursor" src="img_lights.jpg" style="width:100%" onclick="currentSlide(4)" alt="Northern Lights">
+                    </div>
+                    <div class="column">
+                        <img class="demo cursor" src="img_nature.jpg" style="width:100%" onclick="currentSlide(5)" alt="Nature and sunrise">
+                    </div>
+                    <div class="column">
+                        <img class="demo cursor" src="img_snow.jpg" style="width:100%" onclick="currentSlide(6)" alt="Snowy Mountains">
+                    </div> -->
+                    </div>
+                </div>
+
+            </div>
+        </Section>
+    
+    <Section id="Car_Predictor" >
+    <div class="container" style="padding-top: 55x;" >
+        <div class="row">
+            <div class="card mt-50" style="width: 100%; height: 100%">
+                <div class="card-header" style="text-align: center">
+                    <h1>Welcome to Car Price Predictor</h1>
+                </div>
+                <div class="card-body">
+                    <div class="col-12" style="text-align: center">
+                        <h5>This app predicts the price of a car you want to sell. Try filling the details below: </h5>
+                    </div>
+                    <br>
+                    <form method="post" accept-charset="utf-8" name="Modelform">
+                        <div class="col-md-10 form-group" style="text-align: center">
+                            <label><b>Select the company:</b> </label><br>
+                            <select class="selectpicker form-control" id="company" name="company" required="1"
+                                    onchange="load_car_models(this.id,'car_models')">
+                                {% for company in companies %}
+                                <option value="{{ company }}">{{ company }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-10 form-group" style="text-align: center">
+                            <label><b>Select the model:</b> </label><br>
+                            <select class="selectpicker form-control" id="car_models" name="car_models" required="1">
+                            </select>
+                        </div>
+                        <div class="col-md-10 form-group" style="text-align: center">
+                            <label><b>Select Year of Purchase:</b> </label><br>
+                            <select class="selectpicker form-control" id="year" name="year" required="1">
+                                {% for year in years %}
+                                <option value="{{ year }}">{{ year }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-10 form-group" style="text-align: center">
+                            <label><b>Select the Fuel Type:</b> </label><br>
+                            <select class="selectpicker form-control" id="fuel_type" name="fuel_type" required="1">
+                                {% for fuel in fuel_types %}
+                                <option value="{{ fuel }}">{{ fuel }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-10 form-group" style="text-align: center">
+                            <label><b>Enter the Number of Kilometres that the car has travelled:</b> </label><br>
+                            <input type="text" class="form-control" id="kilo_driven" name="kilo_driven"
+                                placeholder="Enter the kilometres driven ">
+                        </div>
+                        <div class="col-md-10 form-group" style="text-align: center">
+                            <button  class="btn btn-primary form-control" onclick="send_data()">Predict Price</button>
+                        </div>
+                    </form>
+                    <br>
+                    <div class="row">
+                        <div class="col-12" style="text-align: center">
+                            <h4><span id="prediction"></span></h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </Section>
+
+    
+    
+    <Section id="About_Us" style="background-image: url({{url_for('static',filename='image/blackcar.jpg')}});">
+        
+        <div style="color: rgb(253, 252, 252); padding-top: 70px; padding-left: 10px; padding-bottom: 100px;">
+           
+            <h1 style="text-align: Center; padding-top: 10px;"> About Us!! </h1>
+            <div class="center">
+            
+            </div>
+        </div>  
+        <div style="padding-bottom: 200px;">
+            <p style="text-align: center; color: white; padding-left: 400px; padding-right: 400px; font-size: 25px;" >
+                The price of a car depends on a lot of factors like the goodwill of the brand of the car, features of the car, fuel 
+                type and the mileage it gives and many more. Car price prediction is one of the major research areas in machine learning. 
+                will take you through how to train a car price prediction model with machine learning using Python.</p>
+
+            <p style="text-align: center; color: white; padding-left: 400px; padding-right: 400px; font-size: 25px;">
+                One of the main areas of research in machine learning is the prediction of the price of cars. It is based on finance and the 
+                marketing domain. It is a major research topic in machine learning because the price of a car depends on many factors.</p>
+        </div>
+        
+    </Section>
+
+    <Section id="Contact_Us" >
+        
+    <div style="padding-top: 10px;">
+        <div class="contact_me" style="color: white; padding-left: 10px; padding-bottom: 50px;">
+            <h1> Contact Us!!</h1>
+            <p>If You Have Any Query Realted to Car Price Prediction.</p>
+        
+        </div>
+        <!-- footer  -------------------------->
+        <footer>
+
+            <div class="box_container" style="background-color: #343A40; padding-left: 25px; padding-right: 25px; padding-bottom: 100px;">
+                <!-- 1  ------------------------->
+                <div class="box_3">
+                    <span>1</span>
+                    <p >Kamal Kandpal</p>
+                    <p >Front End Developer <br> 8193816977 <br>kamalkandpal007@gmail.com</p>
+                    
+                </div>
+                <!-- 2  ------------------------->
+                <div class="box_3">
+                    <span>2</span>
+                    <p >Kunal Jalan</p>
+                    <p >Back End Developer <br> 8740079170 <br>jalankunal0@gmail.com</p>
+                </div>
+                <!-- 3  ------------------------->
+                <div class="box_3">
+                    <span>3</span>
+                    <p >Nikhil Agarwal</p>
+                    <p >Back End Developer<br> 7425040067 <br>nikhilagarwal102@gmail.com</p>
+                </div>
+                <div class="box_4">
+                    <span>4</span>
+                    <p >Yash Sharma</p>
+                    <p >Front End Developer <br> 9772930805 <br>yash4314@gmail.com</p>
+                </div>
+            </div>
+        <!-- copyright  ------------------>
+                <p class="copyright" style="color: white; text-align:center; padding-bottom: 50px;">Copyright by Car Price Prediction</p>
+        </footer>
+    </div>
+    </Section>
+    
+
+    <script>
+
+        function load_car_models(company_id,car_model_id)
+        {
+            var company=document.getElementById(company_id);
+            var car_model= document.getElementById(car_model_id);
+            console.log(company.value);
+            car_model.value="";
+            car_model.innerHTML="";
+            {% for company in companies %}
+                if( company.value == "{{ company }}")
+                {
+                    {% for model in car_models %}
+                        {% if company in model %}
+
+                            var newOption= document.createElement("option");
+                            newOption.value="{{ model }}";
+                            newOption.innerHTML="{{ model }}";
+                            car_model.options.add(newOption);
+                        {% endif %}
+                    {% endfor %}
+                }
+            {% endfor %}
+        }
+
+        function form_handler(event) {
+            event.preventDefault(); // Don't submit the form normally
+        }
+        function send_data()
+        {
+            document.querySelector('form').addEventListener("submit",form_handler);
+
+            var fd=new FormData(document.querySelector('form'));
+
+            var xhr= new XMLHttpRequest({mozSystem: true});
+
+            xhr.open('POST','/predict',true);
+            document.getElementById('prediction').innerHTML="Wait! Predicting Price.....";
+            xhr.onreadystatechange = function(){
+                if(xhr.readyState == XMLHttpRequest.DONE){
+                    document.getElementById('prediction').innerHTML="Prediction: ₹"+xhr.responseText;
+
+                }
+            };
+
+            xhr.onload= function(){};
+
+            xhr.send(fd);
+        }
+    </script>
+
+<script>  // Slide Show//
+    let slideIndex = 1;
+    showSlides(slideIndex);
+
+
+    function plusSlides(n) {
+        showSlides(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+        showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+        let i;
+        let slides = document.getElementsByClassName("mySlides");
+        let dots = document.getElementsByClassName("demo");
+        let captionText = document.getElementById("caption");
+        if (n > slides.length) { slideIndex = 1 }
+        if (n < 1) { slideIndex = slides.length }
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex - 1].style.display = "block";
+        dots[slideIndex - 1].className += " active";
+        captionText.innerHTML = dots[slideIndex - 1].alt;
+    }
+</script>
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+            integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+            crossorigin="anonymous"></script>
+    </body>
+    </html>
